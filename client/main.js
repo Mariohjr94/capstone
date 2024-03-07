@@ -15,23 +15,25 @@ class GameScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("map", "/game-assets/battlefield.png");
-    this.load.tilemapTiledJSON("collisions", "/game-assets/battlefield.json");
-    this.load.spritesheet(
-      "player",
-      "/game-assets/Archers-Character/Archers/Archer-1.png",
-      { frameWidth: 16, frameHeight: 16 }
-    );
+    this.load.tilemapTiledJSON("map", "/game-assets/map/battlefield.json");
+    this.load.image("tiles", "/game-assets/map/battlefield.png");
+    // this.load.spritesheet(
+    //   "player",
+    //   "/game-assets/Archers-Character/Archers/Archer-1.png",
+    //   { frameWidth: 12, frameHeight: 12 }
+    // );
   }
 
   create() {
-    const background = this.add.sprite(0, 0, "map");
-    background.setOrigin(0, 0);
-    const scaleX = sizes.width / background.width;
-    const scaleY = sizes.height / background.height;
-    background.setScale(scaleX, scaleY);
+    const map = this.make.tilemap({ key: "map" });
+    const tileset = map.addTilesetImage("battlefield", "tiles");
 
-    this.player = this.physics.add.sprite(10, 10, "player", 1);
+    const backgroundClouds = map.createStaticLayer(
+      "background_clouds",
+      tileset,
+      0,
+      0
+    );
   }
 
   update() {}

@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="140" height="80" tilewidth="12" tileheight="12" infinite="0" nextlayerid="21" nextobjectid="5">
  <editorsettings>
-  <export target="../../arrow_game/bow_and_arrow/public/game-assets/battlefield..js" format="js"/>
+  <export target="battlefield..tmj" format="json"/>
  </editorsettings>
- <tileset firstgid="1" source="Background.tsx"/>
- <tileset firstgid="5" source="TilesExamples.tsx"/>
- <tileset firstgid="685" source="Tileset.tsx"/>
- <tileset firstgid="789" source="Trees.tsx"/>
- <tileset firstgid="999" source="ladder.tsx"/>
- <tileset firstgid="1001" source="collision.tsx"/>
+ <tileset firstgid="1" name="Background" tilewidth="512" tileheight="320" tilecount="4" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="512" height="320" source="FreePlatformerNA/Background/BGBack.png"/>
+  </tile>
+  <tile id="1">
+   <image width="512" height="320" source="FreePlatformerNA/Background/BGFront.png"/>
+  </tile>
+  <tile id="2">
+   <image width="512" height="320" source="FreePlatformerNA/Background/CloudsBack.png"/>
+  </tile>
+  <tile id="3">
+   <image width="512" height="320" source="FreePlatformerNA/Background/CloudsFront.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="5" name="TilesExamples" tilewidth="12" tileheight="12" tilecount="680" columns="34">
+  <image source="FreePlatformerNA/Foreground/TilesExamples.png" width="416" height="240"/>
+ </tileset>
+ <tileset firstgid="685" name="Tileset" tilewidth="12" tileheight="12" tilecount="104" columns="13">
+  <image source="FreePlatformerNA/Foreground/Tileset.png" width="160" height="96"/>
+ </tileset>
+ <tileset firstgid="789" name="Trees" tilewidth="12" tileheight="12" tilecount="210" columns="21">
+  <image source="FreePlatformerNA/Foreground/Trees.png" width="256" height="128"/>
+ </tileset>
+ <tileset firstgid="999" name="ladder" tilewidth="28" tileheight="128" tilecount="2" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="0">
+   <image width="28" height="128" source="wood_set/ladder/28x128/2.png"/>
+  </tile>
+  <tile id="1">
+   <image width="28" height="128" source="wood_set/ladder/28x128/1.png"/>
+  </tile>
+ </tileset>
+ <tileset firstgid="1001" name="collision" tilewidth="12" tileheight="12" tilecount="1" columns="1">
+  <image source="FreePlatformerNA/collision.png" width="12" height="12"/>
+ </tileset>
  <objectgroup id="2" name="background_clouds" offsetx="-2" offsety="0">
   <object id="1" gid="3" x="2.9322" y="961.49" width="1677.97" height="960.32"/>
  </objectgroup>
@@ -693,7 +723,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="12" name="collision" width="140" height="80" offsetx="1" offsety="0">
+ <layer id="12" name="collision" width="140" height="80" visible="0" offsetx="1" offsety="0">
   <properties>
    <property name="collide" type="bool" value="true"/>
   </properties>
@@ -780,7 +810,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="14" name="platform_collision" width="140" height="80" offsetx="1" offsety="0">
+ <layer id="14" name="platform_collision" width="140" height="80" visible="0" offsetx="1" offsety="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -864,7 +894,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="15" name="ladder_collision" width="140" height="80" offsetx="3" offsety="0">
+ <layer id="15" name="ladder_collision" width="140" height="80" visible="0" offsetx="3" offsety="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
