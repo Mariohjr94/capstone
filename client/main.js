@@ -16,24 +16,40 @@ class GameScene extends Phaser.Scene {
 
   preload() {
     this.load.tilemapTiledJSON("map", "/game-assets/map/battlefield.json");
-    this.load.image("tiles", "/game-assets/map/battlefield.png");
-    // this.load.spritesheet(
-    //   "player",
-    //   "/game-assets/Archers-Character/Archers/Archer-1.png",
-    //   { frameWidth: 12, frameHeight: 12 }
-    // );
+    this.load.image("tiles", "/public/game-assets/map/battlefield.png");
+    this.load.spritesheet(
+      "player",
+      "/game-assets/Archers-Character/Archers/Archer-1.png",
+      { frameWidth: 12, frameHeight: 12 }
+    );
   }
 
   create() {
-    const map = this.make.tilemap({ key: "map" });
-    const tileset = map.addTilesetImage("battlefield", "tiles");
+    const backgroundImage = this.add.image(0, 0, "tiles").setOrigin(0);
 
-    const backgroundClouds = map.createStaticLayer(
-      "background_clouds",
-      tileset,
-      0,
-      0
+    const scaleFactor = Math.max(
+      this.scale.width / backgroundImage.width,
+      this.scale.height / backgroundImage.height
     );
+    backgroundImage.setScale(scaleFactor);
+
+    //adding collision to floors
+    const map = this.make.tilemap({
+      key: "map",
+      tileWidth: 12,
+      tileHeight: 12,
+    });
+
+    const tileset = map.addTilesetImage("Tileset", "tiles");
+    const collisionLayer = map.createLayer("collision", tileset, 0, 0);
+    collisionLayer.setScale(scaleFactor);
+    collisionLayer.setCollisionByExclusion([-1]);
+    collisionLayer.setAlpha(0);
+
+    const player = this.physics.add.sprite(100, 100, "player");
+    this.physics.world.enable(player);
+    this.physics.add.collider(player, collisionLayer);
+    player.setCollideWorldBounds(true);
   }
 
   update() {}

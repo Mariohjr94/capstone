@@ -1211,9 +1211,9 @@
          "firstgid":999,
          "grid":
             {
-             "height":1,
+             "height":12,
              "orientation":"orthogonal",
-             "width":1
+             "width":12
             },
          "margin":0,
          "name":"ladder",

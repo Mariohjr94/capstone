@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="140" height="80" tilewidth="12" tileheight="12" infinite="0" nextlayerid="21" nextobjectid="5">
  <editorsettings>
-  <export target="battlefield..tmj" format="json"/>
+  <export target="battlefield.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Background" tilewidth="512" tileheight="320" tilecount="4" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
@@ -28,7 +28,7 @@
   <image source="FreePlatformerNA/Foreground/Trees.png" width="256" height="128"/>
  </tileset>
  <tileset firstgid="999" name="ladder" tilewidth="28" tileheight="128" tilecount="2" columns="0">
-  <grid orientation="orthogonal" width="1" height="1"/>
+  <grid orientation="orthogonal" width="12" height="12"/>
   <tile id="0">
    <image width="28" height="128" source="wood_set/ladder/28x128/2.png"/>
   </tile>
