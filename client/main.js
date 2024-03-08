@@ -26,7 +26,7 @@ class GameScene extends Phaser.Scene {
 
   create() {
     const backgroundImage = this.add.image(0, 0, "tiles").setOrigin(0);
-
+    //scalling funtion
     const scaleFactor = Math.max(
       this.scale.width / backgroundImage.width,
       this.scale.height / backgroundImage.height
@@ -46,6 +46,7 @@ class GameScene extends Phaser.Scene {
     collisionLayer.setCollisionByExclusion([-1]);
     collisionLayer.setAlpha(0);
 
+    //player
     const player = this.physics.add.sprite(100, 100, "player");
     this.physics.world.enable(player);
     this.physics.add.collider(player, collisionLayer);
