@@ -21,7 +21,7 @@ class GameScene extends Phaser.Scene {
     this.load.spritesheet(
       "player",
       "/public/game-assets/Archers-Character/Archers/Archer-1.png",
-      { frameWidth: 64, frameHeight: 48 }
+      { frameWidth: 64, frameHeight: 64 }
     );
   }
 
@@ -45,13 +45,24 @@ class GameScene extends Phaser.Scene {
     const collisionLayer = map.createLayer("collision", tileset, 0, 0);
     collisionLayer.setScale(scaleFactor);
     collisionLayer.setCollisionByExclusion([-1]);
+    collisionLayer.setCollisionByProperty({ collide: true });
     collisionLayer.setAlpha(0); // makes layer invisible
 
     //player
     this.player = new Player(this, 100, 100);
     this.player.setOrigin(0.5, 0.5);
-    this.player.setScale(1.5);
-    this.physics.world.enable(this.player);
+    this.player.setScale(1.75);
+    //resizing bouncing box
+    const newBoundingBoxWidth = 16;
+    const newBoundingBoxHeight = 13;
+    const offsetX = (this.player.width - newBoundingBoxWidth) / 2;
+    const offsetY = (this.player.height - newBoundingBoxHeight) / 1.5;
+    // Set the new size of the bounding box
+    this.player.body.setSize(newBoundingBoxWidth, newBoundingBoxHeight, true);
+    // Reposition the bounding box relative to the player's center
+    this.player.body.setOffset(offsetX, offsetY);
+    this.player.anims.play("idle");
+
     // Add collision between player and collision layer
     this.physics.add.collider(this.player, collisionLayer);
   }
