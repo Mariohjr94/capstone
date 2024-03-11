@@ -4,7 +4,7 @@ import Player from "./js/classes/Player.js";
 
 const sizes = {
   width: 1000,
-  height: 600,
+  height: 550,
 };
 
 const speedDown = 300;
@@ -20,7 +20,7 @@ class GameScene extends Phaser.Scene {
     this.load.image("tiles", "/public/game-assets/map/battlefield.png");
     this.load.spritesheet(
       "player",
-      "/public/game-assets/Archers-Character/Archers/Archer-1.png",
+      "/public/game-assets/Archers-Character/Archers/knight.png",
       { frameWidth: 64, frameHeight: 64 }
     );
   }
@@ -50,11 +50,11 @@ class GameScene extends Phaser.Scene {
 
     //player
     this.player = new Player(this, 100, 100);
-    this.player.setOrigin(0.5, 0.5);
-    this.player.setScale(1.75);
+    this.player.setOrigin(1, 1);
+    this.player.setScale(0.75);
     //resizing bouncing box
     const newBoundingBoxWidth = 16;
-    const newBoundingBoxHeight = 13;
+    const newBoundingBoxHeight = 48;
     const offsetX = (this.player.width - newBoundingBoxWidth) / 2;
     const offsetY = (this.player.height - newBoundingBoxHeight) / 1.5;
     // Set the new size of the bounding box

@@ -6,59 +6,61 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setBounce(0.2);
     this.setCollideWorldBounds(true);
 
+    this.speed = 160;
+
     // Create the player's animations
     this.anims.create({
       key: "idle",
       frames: this.anims.generateFrameNumbers("player", {
-        start: 0,
-        end: 4,
+        start: 176,
+        end: 184,
       }),
       frameRate: 10,
       repeat: -1,
     });
 
-    this.speed = 200;
+    this.anims.create({
+      key: "right",
+      frames: this.anims.generateFrameNumbers("player", { start: 5, end: 8 }),
+      frameRate: 10,
+      repeat: -1,
+    });
   }
 
   //     this.anims.create({
   //       key: "turn",
   //       frames: [{ key: "player", frame: 4 }],
-  //       frameRate: 20,
-  //     });
 
-  //     this.anims.create({
-  //       key: "right",
-  //       frames: this.anims.generateFrameNumbers("player", { start: 5, end: 8 }),
-  //       frameRate: 10,
-  //       repeat: -1,
+  //       frameRate: 20,
   //     });
 
   //     // Play the 'turn' animation by default
   //     this.anims.play("turn");
   //   }
 
-  //   update() {
-  //     // Move the player left or right based on the arrow keys
-  //     if (this.scene.input.keyboard.isDown(Phaser.Input.Keyboard.KeyCodes.LEFT)) {
-  //       this.setVelocityX(-160);
-  //       this.anims.play("left", true);
-  //     } else if (
-  //       this.scene.input.keyboard.isDown(Phaser.Input.Keyboard.KeyCodes.RIGHT)
-  //     ) {
-  //       this.setVelocityX(160);
-  //       this.anims.play("right", true);
-  //     } else {
-  //       this.setVelocityX(0);
-  //       this.anims.play("turn");
-  //     }
+  update() {
+    // Move the player left or right based on the arrow keys
+    if (this.scene.input.keyboard.isDown(Phaser.Input.Keyboard.KeyCodes.LEFT)) {
+      this.setVelocityX(-160);
+      this.anims.play("left", true);
+    } else if (
+      this.scene.input.keyboard.isDown(Phaser.Input.Keyboard.KeyCodes.RIGHT)
+    ) {
+      this.setVelocityX(160);
+      this.anims.play("right", true);
+    } else {
+      this.setVelocityX(0);
+      this.anims.play("turn");
+    }
 
-  //     // Allow the player to jump if they are on the ground
-  //     if (
-  //       this.body.onFloor() &&
-  //       this.scene.input.keyboard.isDown(Phaser.Input.Keyboard.KeyCodes.SPACE)
-  //     ) {
-  //       this.setVelocityY(-330);
-  //     }
+    // Allow the player to jump if they are on the ground
+    if (
+      this.body.onFloor() &&
+      this.scene.input.keyboard.isDown(Phaser.Input.Keyboard.KeyCodes.SPACE)
+    ) {
+      this.setVelocityY(-330);
+    }
+  }
 
   update() {
     const cursors = this.scene.input.keyboard.createCursorKeys();
