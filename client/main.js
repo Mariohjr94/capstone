@@ -3,8 +3,8 @@ import Phaser from "phaser";
 import Player from "./js/classes/Player.js";
 
 const sizes = {
-  width: 1000,
-  height: 550,
+  width: 1050,
+  height: 600,
 };
 
 const speedDown = 300;
@@ -48,10 +48,16 @@ class GameScene extends Phaser.Scene {
     collisionLayer.setCollisionByProperty({ collide: true });
     collisionLayer.setAlpha(0); // makes layer invisible
 
+    // Initialize cursors
+    this.cursors = this.input.keyboard.createCursorKeys();
+
     //player
-    this.player = new Player(this, 100, 100);
+    this.player = new Player(this, 100, 100, this.cursors);
+    this.physics.add.existing(this.player);
+    this.add.existing(this.player);
     this.player.setOrigin(1, 1);
     this.player.setScale(0.75);
+
     //resizing bouncing box
     const newBoundingBoxWidth = 16;
     const newBoundingBoxHeight = 48;
@@ -61,13 +67,15 @@ class GameScene extends Phaser.Scene {
     this.player.body.setSize(newBoundingBoxWidth, newBoundingBoxHeight, true);
     // Reposition the bounding box relative to the player's center
     this.player.body.setOffset(offsetX, offsetY);
-    this.player.anims.play("idle");
+    this.player.anims.play("right");
 
     // Add collision between player and collision layer
     this.physics.add.collider(this.player, collisionLayer);
   }
 
-  update() {}
+  update() {
+    console.log("Scene update loop running");
+  }
 }
 
 const config = {
