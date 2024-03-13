@@ -9,7 +9,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     this.speed = 160;
 
-    // Create the player's animations
+    //Create the player's animations
     this.anims.create({
       key: "left",
       frames: this.anims.generateFrameNumbers("player", {
@@ -33,26 +33,20 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // Play the 'turn' animation by default
     console.log("Playing default animation: left");
 
-    this.anims.play("left");
+    this.anims.play("right");
 
     this.cursors = cursors;
   }
 
   update() {
-    console.log("Left:", this.cursors.left.isDown);
-    console.log("Right:", this.cursors.right.isDown);
-    console.log("Up:", this.cursors.up.isDown);
-    console.log("Down:", this.cursors.down.isDown);
     this.setDrag(2000);
     // Move the player left or right based on the arrow keys
     if (this.cursors.left.isDown) {
       this.setVelocityX(-160);
       this.anims.play("left", true);
-      //this.setFlipX(true);
     } else if (this.cursors.right.isDown) {
       this.setVelocityX(160);
       this.anims.play("right", true);
-      //this.setFlipX(false);
     } else {
       this.body.setVelocityX(0);
       this.anims.play("right");

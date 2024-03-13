@@ -75,6 +75,7 @@ class GameScene extends Phaser.Scene {
 
   update() {
     console.log("Scene update loop running");
+    this.player.update();
   }
 }
 
