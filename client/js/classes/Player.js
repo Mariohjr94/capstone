@@ -10,6 +10,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.speed = 160;
 
     //Create the player's animations
+    //using the knight.png as a reference for the animations
     this.anims.create({
       key: "move-left",
       frames: this.anims.generateFrameNumbers("player", {
@@ -80,9 +81,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: -1,
     });
 
-    // Play the 'turn' animation by default
-    //this.anims.play("die");
-
     this.cursors = cursors;
   }
 
@@ -96,16 +94,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     } else if (this.cursors.right.isDown) {
       this.setVelocityX(160);
       this.anims.play("move-right", true);
-    } else if (this.cursor.) {
-
-    } 
-    else {
+      // } else if (
+      //   this.input.keyboard.on("keydown-A", listener) &&
+      //   this.cursors.right.isDown
+      // ) {
+      //   this.anims.play("shoot-right");
+    } else {
       this.body.setVelocityX(0);
       this.anims.play("turn-right");
     }
 
     // Allow the player to jump if they are on the ground
-    if (this.body.onFloor && this.cursors.space.isDown) {
+    if (this.body.onFloor && this.cursors.up.isDown) {
       this.setVelocityY(-330);
     }
   }
