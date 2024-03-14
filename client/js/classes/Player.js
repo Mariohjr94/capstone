@@ -11,7 +11,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     //Create the player's animations
     this.anims.create({
-      key: "left",
+      key: "move-left",
       frames: this.anims.generateFrameNumbers("player", {
         start: 144,
         end: 150,
@@ -21,7 +21,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.anims.create({
-      key: "right",
+      key: "move-right",
       frames: this.anims.generateFrameNumbers("player", {
         start: 176,
         end: 184,
@@ -30,8 +30,58 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: -1,
     });
 
+    this.anims.create({
+      key: "turn-left",
+      frames: this.anims.generateFrameNumbers("player", {
+        start: 144,
+        end: 144,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "turn-right",
+      frames: this.anims.generateFrameNumbers("player", {
+        start: 176,
+        end: 176,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "shoot-left",
+      frames: this.anims.generateFrameNumbers("player", {
+        start: 256,
+        end: 268,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "shoot-right",
+      frames: this.anims.generateFrameNumbers("player", {
+        start: 288,
+        end: 300,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
+    this.anims.create({
+      key: "die",
+      frames: this.anims.generateFrameNumbers("player", {
+        start: 336,
+        end: 341,
+      }),
+      frameRate: 10,
+      repeat: -1,
+    });
+
     // Play the 'turn' animation by default
-    // this.anims.play("right");
+    //this.anims.play("die");
 
     this.cursors = cursors;
   }
@@ -42,17 +92,20 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // Move the player left or right based on the arrow keys
     if (this.cursors.left.isDown) {
       this.setVelocityX(-160);
-      this.anims.play("left", true);
+      this.anims.play("move-left", true);
     } else if (this.cursors.right.isDown) {
       this.setVelocityX(160);
-      this.anims.play("right", true);
-    } else {
+      this.anims.play("move-right", true);
+    } else if (this.cursor.) {
+
+    } 
+    else {
       this.body.setVelocityX(0);
-      this.anims.play("right");
+      this.anims.play("turn-right");
     }
 
     // Allow the player to jump if they are on the ground
-    if (this.body.onFloor && this.cursors.up.isDown) {
+    if (this.body.onFloor && this.cursors.space.isDown) {
       this.setVelocityY(-330);
     }
   }
