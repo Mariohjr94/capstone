@@ -31,15 +31,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     // Play the 'turn' animation by default
-    console.log("Playing default animation: left");
-
-    this.anims.play("right");
+    // this.anims.play("right");
 
     this.cursors = cursors;
   }
 
   update() {
-    this.setDrag(2000);
+    this.setDrag(550);
+
     // Move the player left or right based on the arrow keys
     if (this.cursors.left.isDown) {
       this.setVelocityX(-160);
@@ -53,10 +52,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     // Allow the player to jump if they are on the ground
-    if (
-      (this.body.blocked.down || this.body.touching.down) &&
-      this.scene.input.keyboard.isDown(Phaser.Input.Keyboard.SPACE)
-    ) {
+    if (this.body.onFloor && this.cursors.up.isDown) {
       this.setVelocityY(-330);
     }
   }

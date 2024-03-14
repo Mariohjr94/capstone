@@ -7,7 +7,7 @@ const sizes = {
   height: 600,
 };
 
-const speedDown = 300;
+const speedDown = 500;
 
 //creating game scene
 class GameScene extends Phaser.Scene {
@@ -53,8 +53,7 @@ class GameScene extends Phaser.Scene {
 
     //player
     this.player = new Player(this, 100, 100, this.cursors);
-    this.physics.add.existing(this.player);
-    this.add.existing(this.player);
+    this.player.setGravity(speedDown);
     this.player.setOrigin(1, 1);
     this.player.setScale(0.75);
 
@@ -65,9 +64,7 @@ class GameScene extends Phaser.Scene {
     const offsetY = (this.player.height - newBoundingBoxHeight) / 1.5;
     // Set the new size of the bounding box
     this.player.body.setSize(newBoundingBoxWidth, newBoundingBoxHeight, true);
-    // Reposition the bounding box relative to the player's center
     this.player.body.setOffset(offsetX, offsetY);
-    this.player.anims.play("right");
 
     // Add collision between player and collision layer
     this.physics.add.collider(this.player, collisionLayer);
@@ -83,7 +80,8 @@ const config = {
   type: Phaser.WEBGL,
   width: sizes.width,
   height: sizes.height,
-  mode: Phaser.Scale.FIT,
+  parent: "phaser-game",
+  mode: Phaser.Scale,
   canvas: gameCanvas,
   physics: {
     default: "arcade",
