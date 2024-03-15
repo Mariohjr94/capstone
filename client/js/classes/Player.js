@@ -38,7 +38,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         end: 144,
       }),
       frameRate: 10,
-      repeat: -1,
+      repeat: 1,
     });
 
     this.anims.create({
@@ -48,7 +48,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         end: 176,
       }),
       frameRate: 10,
-      repeat: -1,
+      repeat: 1,
     });
 
     this.anims.create({
@@ -64,11 +64,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.anims.create({
       key: "shoot-right",
       frames: this.anims.generateFrameNumbers("player", {
-        start: 288,
-        end: 300,
+        start: 304,
+        end: 316,
       }),
-      frameRate: 10,
-      repeat: -1,
+      frameRate: 30,
+      repeat: 1,
     });
 
     this.anims.create({
@@ -81,32 +81,58 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       repeat: -1,
     });
 
+    this.anims.create({
+      key: "enter",
+      frames: this.anims.generateFrameNumbers("player", {
+        start: 32,
+        end: 38,
+      }),
+      frameRate: 10,
+      repeat: 1,
+    });
+
     this.cursors = cursors;
+    this.anims.play("enter", true);
   }
+
+  //default animation
 
   update() {
     this.setDrag(550);
 
     // Move the player left or right based on the arrow keys
-    if (this.cursors.left.isDown) {
+    /*
+    player still needs to keep phasing the direction is moving
+    player still needs to shoot  the direction is moving or phasing
+    */
+
+    if (this.scene.input.keyboard.addKey("A").isDown) {
       this.setVelocityX(-160);
       this.anims.play("move-left", true);
-    } else if (this.cursors.right.isDown) {
+    } else if (this.scene.input.keyboard.addKey("D").isDown) {
       this.setVelocityX(160);
       this.anims.play("move-right", true);
-      // } else if (
-      //   this.input.keyboard.on("keydown-A", listener) &&
-      //   this.cursors.right.isDown
-      // ) {
-      //   this.anims.play("shoot-right");
     } else {
-      this.body.setVelocityX(0);
-      this.anims.play("turn-right");
+      this.setVelocityX(0);
+
+      if (this.anims.currentAnim !== null) {
+        if (this.anims.currentAnim.key === "move-left") {
+          this.anims.play("turn-left", true);
+        } else if (this.anims.currentAnim.key === "move-right") {
+          this.anims.play("turn-right", true);
+        }
+      }
     }
 
-    // Allow the player to jump if they are on the ground
-    if (this.body.onFloor && this.cursors.up.isDown) {
+    if (this.body.onFloor && this.scene.input.keyboard.addKey("W").isDown) {
       this.setVelocityY(-330);
+    } else if (
+      this.body.onFloor &&
+      this.scene.input.keyboard.addKey("S").isDown
+    ) {
+      this.setVelocityY(330);
+    } else if (this.scene.input.keyboard.addKey("SPACE").isDown) {
+      this.anims.play("shoot-right", true);
     }
   }
 }
