@@ -40,13 +40,18 @@ class GameScene extends Phaser.Scene {
       tileWidth: 12,
       tileHeight: 12,
     });
-
+    //terrain collision
     const tileset = map.addTilesetImage("Tileset", "tiles");
     const collisionLayer = map.createLayer("collision", tileset, 0, 0);
     collisionLayer.setScale(scaleFactor);
     collisionLayer.setCollisionByExclusion([-1]);
     collisionLayer.setCollisionByProperty({ collide: true });
     collisionLayer.setAlpha(0); // makes layer invisible
+    //player
+    const platformLayer = map.createLayer("collision", tileset, 0, 0);
+    platformLayer.setScale(scaleFactor);
+    platformLayer.setCollisionByExclusion([-1]);
+    platformLayer.setCollisionByProperty({ collide: true });
 
     // Initialize cursors
     this.cursors = this.input.keyboard.createCursorKeys();

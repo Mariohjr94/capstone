@@ -68,7 +68,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         end: 316,
       }),
       frameRate: 30,
-      repeat: 1,
+      repeat: 0,
     });
 
     this.anims.create({
@@ -92,6 +92,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.cursors = cursors;
+
+    //jumping code
+    this.canJump = true;
+    this.jumpKey = scene.input.keyboard.addKey(
+      Phaser.Input.Keyboard.KeyCodes.W
+    );
+
+    //default animation
     this.anims.play("enter", true);
   }
 
@@ -102,7 +110,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Move the player left or right based on the arrow keys
     /*
-    player still needs to keep phasing the direction is moving
     player still needs to shoot  the direction is moving or phasing
     */
 
@@ -124,14 +131,22 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       }
     }
 
-    if (this.body.onFloor && this.scene.input.keyboard.addKey("W").isDown) {
-      this.setVelocityY(-330);
-    } else if (
-      this.body.onFloor &&
-      this.scene.input.keyboard.addKey("S").isDown
+    //jumping
+    if (
+      Phaser.Input.Keyboard.JustDown(this.jumpKey) &&
+      this.canJump &&
+      this.body.onFloor()
     ) {
+      this.setVelocityY(-475);
+    }
+
+    if (this.body.onFloor && this.scene.input.keyboard.addKey("S").isDown) {
       this.setVelocityY(330);
-    } else if (this.scene.input.keyboard.addKey("SPACE").isDown) {
+    }
+
+    //shooting animations
+    /* to be fix */
+    if (this.scene.input.keyboard.addKey("SPACE").isDown) {
       this.anims.play("shoot-right", true);
     }
   }
