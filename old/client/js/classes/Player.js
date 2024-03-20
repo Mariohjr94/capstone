@@ -155,6 +155,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   setDirection(direction) {
     this.direction = direction;
   }
+
   update(cursors) {
     // Check if the player is on the ground
     if (this.body.blocked.down) {
@@ -166,7 +167,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // Horizontal movement
     if (cursors.left.isDown) {
       this.direction = "left";
-
       this.setVelocityX(-this.speed);
       if (this.isGrounded) {
         this.anims.play("runLeft", true);
@@ -175,7 +175,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       }
     } else if (cursors.right.isDown) {
       this.direction = "right";
-
       this.setVelocityX(this.speed);
       if (this.isGrounded) {
         this.anims.play("runRight", true);
@@ -208,6 +207,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityY(-this.speed * 2); // Adjust jump velocity as needed
       this.isGrounded = false;
     }
+
+    //shooting
 
     // Apply gravity
     this.setAccelerationY(400); // Adjust gravity as needed

@@ -77,13 +77,38 @@ class GameScene extends Phaser.Scene {
     this.player = new Player(this, 100, 100, this.playerId, this.playerId);
 
     this.tileset = this.map.addTilesetImage("Tileset", "tiles");
+
     this.map.setCollisionBetween();
+    //Floor collision layer ------------------------------------------------------
     this.collisionLayer = this.map.createLayer("collision", this.tileset, 0, 0);
-    console.log(this.collisionLayer);
     this.collisionLayer.setScale(this.scaleFactor);
     this.collisionLayer.setCollisionByExclusion([-1]);
     this.collisionLayer.setCollisionByProperty({ collide: true });
     this.collisionLayer.setAlpha(0.6); // makes layer invisible
+    //platform collision layer -----------------------------------------------------
+    this.platformCollision = this.map.createLayer(
+      "platform_collision",
+      this.tileset,
+      0,
+      0
+    );
+    this.platformCollision.setScale(this.scaleFactor);
+    this.platformCollision.setCollisionByExclusion([-1]);
+    this.platformCollision.setCollisionByProperty({ collide: true });
+    this.physics.add.collider(this.player, this.platformCollision);
+    this.platformCollision.setAlpha(0.6);
+    //ladder collision layer -----------------------------------------------------
+    this.ladderCollision = this.map.createLayer(
+      "ladder_collision",
+      this.tileset,
+      0,
+      0
+    );
+    this.ladderCollision.setScale(this.scaleFactor);
+    this.ladderCollision.setCollisionByExclusion([-1]);
+    this.ladderCollision.setCollisionByProperty({ collide: true });
+    this.physics.add.overlap(this.player, this.ladderCollision);
+    this.ladderCollision.setAlpha(0.6);
 
     //***BEGIN NEW CONTENT*** ----------------------------------------------------------------
     // Process and send the map data to the server
@@ -122,10 +147,6 @@ class GameScene extends Phaser.Scene {
     // Reposition the bounding box relative to the player's center
     this.player.body.setOffset(this.offsetX, this.offsetY);
     this.player.anims.play("idleLeft");
-
-    // Add collision between player and collision layer
-
-    // this.physics.add.existing(this.player);
 
     // ***BEGIN NEW CONTENT*** ----------------------------------------------------
     this.playerArr = [];
@@ -202,6 +223,7 @@ class GameScene extends Phaser.Scene {
     this.physics.world.collide(
       this.player,
       this.collisionLayer,
+
       (player, tile) => {
         // console.log("Collision detected at position:", tile.pixelX, tile.pixelY);
         // console.log("Collision detected at player position:", player.x, player.y);
