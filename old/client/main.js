@@ -34,6 +34,10 @@ class GameScene extends Phaser.Scene {
       "/game-assets/Archers-Character/Archers/Archer-1-left.png",
       { frameWidth: 64, frameHeight: 64 }
     );
+    this.load.spritesheet("arrow", "/game-assets/Archers/Arrow/arrow.png", {
+      frameWidth: 64,
+      frameHeight: 64,
+    });
   }
 
   create() {
@@ -147,6 +151,8 @@ class GameScene extends Phaser.Scene {
     // Reposition the bounding box relative to the player's center
     this.player.body.setOffset(this.offsetX, this.offsetY);
     this.player.anims.play("idleLeft");
+
+    //resize arrow bounding box
 
     // ***BEGIN NEW CONTENT*** ----------------------------------------------------
     this.playerArr = [];

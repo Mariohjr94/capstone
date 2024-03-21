@@ -25,7 +25,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add.existing(this);
     this.setBounce(0.1);
     this.setCollideWorldBounds(true);
-    scene.physics.add.collider(this, scene.collisionLayer);
 
     // Create the player's animations
     this.anims.create({
@@ -106,7 +105,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         end: 22,
       }),
       frameRate: 16,
-      repeat: 1,
+      repeat: 0,
     });
 
     this.anims.create({
@@ -116,7 +115,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         end: 22,
       }),
       frameRate: 16,
-      repeat: 1,
+      repeat: 0,
     });
 
     this.anims.create({
@@ -126,30 +125,52 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         end: 26,
       }),
       frameRate: 16,
-      repeat: 1,
-    });
-
-    this.anims.create({
-      key: "shootRight",
-      frames: this.anims.generateFrameNumbers("player", {
-        start: 19,
-        end: 22,
-      }),
-      frameRate: 16,
-      repeat: 0,
-    });
-
-    this.anims.create({
-      key: "shootLeft",
-      frames: this.anims.generateFrameNumbers("player", {
-        start: 19,
-        end: 22,
-      }),
-      frameRate: 16,
       repeat: 0,
     });
 
     this.speed = 200;
+  }
+
+  //shooting funtion
+  shoot() {
+    // Create arrow sprite at the player's position
+    const arrow = this.scene.physics.add.sprite(this.x, this.y, "arrow");
+    arrow.setOrigin(0.5, 0.5);
+    arrow.setScale(2);
+    const arrowBody = arrow.body;
+    arrowBody.setSize(8, 3);
+
+    if (this.direction === "left") {
+      arrow.flipX = true;
+      arrow.setPosition(this.x - 20, this.y);
+    } else {
+      arrow.setPosition(this.x + 20, this.y);
+    }
+
+    // Set arrow speed
+    const velocityX = this.direction === "left" ? -600 : 600;
+    arrow.setVelocityX(velocityX);
+
+    // Play shooting animation
+    const shootAnim = this.direction === "left" ? "attackLeft" : "attackRight";
+    this.anims.play(shootAnim, true);
+
+    // Destroy arrow after when collision
+    this.scene.physics.add.collider(arrow, this.scene.platformCollision, () => {
+      arrow.destroy();
+    });
+
+    // Destroy arrow after collision
+    this.scene.physics.add.collider(arrow, this.scene.collisionLayer, () => {
+      arrow.destroy();
+    });
+
+    // Destroy arrow after collision with player
+    this.scene.physics.add.overlap(arrow, this.scene, (arrow) => {
+      // Handle collision between arrow and player here
+
+      arrow.destroy();
+    });
   }
 
   setDirection(direction) {
@@ -164,8 +185,20 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.isGrounded = false;
     }
 
-    // Horizontal movement
-    if (cursors.left.isDown) {
+    // Shooting
+    if (Phaser.Input.Keyboard.JustDown(cursors.space)) {
+      // Trigger shoot animation
+      if (this.direction === "left") {
+        this.anims.play("attackLeft", true);
+      } else {
+        this.anims.play("attackRight", true);
+      }
+
+      // Perform shooting action
+      this.shoot();
+    }
+    // Check for horizontal movement
+    else if (cursors.left.isDown) {
       this.direction = "left";
       this.setVelocityX(-this.speed);
       if (this.isGrounded) {
@@ -207,8 +240,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityY(-this.speed * 2); // Adjust jump velocity as needed
       this.isGrounded = false;
     }
-
-    //shooting
 
     // Apply gravity
     this.setAccelerationY(400); // Adjust gravity as needed
