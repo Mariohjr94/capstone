@@ -150,7 +150,6 @@ class GameScene extends Phaser.Scene {
 
     // Reposition the bounding box relative to the player's center
     this.player.body.setOffset(this.offsetX, this.offsetY);
-    this.player.anims.play("idleLeft");
 
     //resize arrow bounding box
 

@@ -104,13 +104,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         start: 19,
         end: 22,
       }),
-      frameRate: 16,
+      frameRate: 30,
       repeat: 0,
     });
 
     this.anims.create({
       key: "attackLeft",
-      frames: this.anims.generateFrameNumbers("player", {
+      frames: this.anims.generateFrameNumbers("playerLeft", {
         start: 19,
         end: 22,
       }),
@@ -166,11 +166,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     // Destroy arrow after collision with player
-    this.scene.physics.add.overlap(arrow, this.scene, (arrow) => {
-      // Handle collision between arrow and player here
+    this.scene.physics.add.overlap(
+      arrow,
+      this.scene.player,
+      (arrow, player) => {
+        // Handle collision between arrow and player here
 
-      arrow.destroy();
-    });
+        arrow.destroy();
+      }
+    );
   }
 
   setDirection(direction) {
@@ -189,7 +193,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     if (Phaser.Input.Keyboard.JustDown(cursors.space)) {
       // Trigger shoot animation
       if (this.direction === "left") {
-        this.anims.play("attackLeft", true);
+        this.flipX = false;
+        this.anims.play("attackRight", true);
       } else {
         this.anims.play("attackRight", true);
       }
