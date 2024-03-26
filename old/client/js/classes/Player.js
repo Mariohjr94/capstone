@@ -38,26 +38,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.anims.create({
-      key: "idleLeft",
-      frames: this.anims.generateFrameNumbers("playerLeft", {
-        start: 0,
-        end: 4,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: "runLeft",
-      frames: this.anims.generateFrameNumbers("playerLeft", {
-        start: 5,
-        end: 12,
-      }),
-      frameRate: 16,
-      repeat: -1,
-    });
-
-    this.anims.create({
       key: "runRight",
       frames: this.anims.generateFrameNumbers("player", {
         start: 5,
@@ -79,16 +59,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.anims.create({
-      key: "jumpLeft",
-      frames: this.anims.generateFrameNumbers("playerLeft", {
-        start: 13,
-        end: 15,
-      }),
-      frameRate: 5,
-      repeat: 0,
-    });
-
-    this.anims.create({
       key: "dieRight",
       frames: this.anims.generateFrameNumbers("player", {
         start: 24,
@@ -105,16 +75,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         end: 22,
       }),
       frameRate: 30,
-      repeat: 0,
-    });
-
-    this.anims.create({
-      key: "attackLeft",
-      frames: this.anims.generateFrameNumbers("playerLeft", {
-        start: 19,
-        end: 22,
-      }),
-      frameRate: 16,
       repeat: 0,
     });
 
@@ -152,8 +112,15 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     arrow.setVelocityX(velocityX);
 
     // Play shooting animation
-    const shootAnim = this.direction === "left" ? "attackLeft" : "attackRight";
-    this.anims.play(shootAnim, true);
+    //const shootAnim = this.direction === "left" ? "attackLeft" : "attackRight";
+    //this.anims.play(shootAnim, true);
+    if (this.direction === "left") {
+      this.flipX = true;
+      this.anims.play("attackRight");
+    } else {
+      this.flipX = false;
+      this.anims.play("attackRight");
+    }
 
     // Destroy arrow after when collision
     this.scene.physics.add.collider(arrow, this.scene.platformCollision, () => {
@@ -204,14 +171,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     // Check for horizontal movement
     else if (cursors.left.isDown) {
+      this.flipX = true;
       this.direction = "left";
       this.setVelocityX(-this.speed);
       if (this.isGrounded) {
-        this.anims.play("runLeft", true);
-      } else if (!this.anims.currentAnim.key.includes("left")) {
-        this.anims.play("jumpLeft", true);
+        this.anims.play("runRight", true);
+      } else if (!this.anims.currentAnim.key.includes("right")) {
+        this.anims.play("jumpRight", true);
       }
     } else if (cursors.right.isDown) {
+      this.flipX = false;
       this.direction = "right";
       this.setVelocityX(this.speed);
       if (this.isGrounded) {
@@ -223,8 +192,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.setVelocityX(0);
       if (this.isGrounded) {
         if (this.direction === "left") {
-          this.anims.play("idleLeft", true);
+          this.flipX = true;
+          this.anims.play("idleRight", true);
         } else {
+          this.flipX = false;
           this.anims.play("idleRight", true);
         }
       }
@@ -238,8 +209,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     ) {
       this.anims.stop(this.anims.currentAnim.key);
       if (this.direction === "left") {
-        this.anims.play("jumpLeft", true);
+        this.flipX = true;
+        this.anims.play("jumpRight", true);
       } else {
+        this.flipX = false;
         this.anims.play("jumpRight", true);
       }
       this.setVelocityY(-this.speed * 2); // Adjust jump velocity as needed
