@@ -28,7 +28,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     // Create the player's animations
     this.anims.create({
-      key: "idleRight",
+      key: "idle",
       frames: this.anims.generateFrameNumbers("player", {
         start: 0,
         end: 4,
@@ -38,7 +38,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.anims.create({
-      key: "runRight",
+      key: "run",
       frames: this.anims.generateFrameNumbers("player", {
         start: 5,
         end: 12,
@@ -48,7 +48,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.anims.create({
-      key: "jumpRight",
+      key: "jump",
       frames: [
         { key: "player", frame: 11 },
         { key: "player", frame: 10 },
@@ -59,7 +59,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.anims.create({
-      key: "dieRight",
+      key: "die",
       frames: this.anims.generateFrameNumbers("player", {
         start: 24,
         end: 26,
@@ -69,7 +69,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.anims.create({
-      key: "attackRight",
+      key: "attack",
       frames: this.anims.generateFrameNumbers("player", {
         start: 19,
         end: 22,
@@ -79,7 +79,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     });
 
     this.anims.create({
-      key: "dieLeft",
+      key: "die",
       frames: this.anims.generateFrameNumbers("player", {
         start: 24,
         end: 26,
@@ -116,10 +116,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //this.anims.play(shootAnim, true);
     if (this.direction === "left") {
       this.flipX = true;
-      this.anims.play("attackRight");
+      this.anims.play("attack");
     } else {
       this.flipX = false;
-      this.anims.play("attackRight");
+      this.anims.play("attack");
     }
 
     // Destroy arrow after when collision
@@ -161,9 +161,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       // Trigger shoot animation
       if (this.direction === "left") {
         this.flipX = false;
-        this.anims.play("attackRight", true);
+        this.anims.play("attack", true);
       } else {
-        this.anims.play("attackRight", true);
+        this.anims.play("attack", true);
       }
 
       // Perform shooting action
@@ -175,28 +175,28 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.direction = "left";
       this.setVelocityX(-this.speed);
       if (this.isGrounded) {
-        this.anims.play("runRight", true);
+        this.anims.play("run", true);
       } else if (!this.anims.currentAnim.key.includes("right")) {
-        this.anims.play("jumpRight", true);
+        this.anims.play("jump", true);
       }
     } else if (cursors.right.isDown) {
       this.flipX = false;
       this.direction = "right";
       this.setVelocityX(this.speed);
       if (this.isGrounded) {
-        this.anims.play("runRight", true);
+        this.anims.play("run", true);
       } else if (!this.anims.currentAnim.key.includes("right")) {
-        this.anims.play("jumpRight", true);
+        this.anims.play("jump", true);
       }
     } else {
       this.setVelocityX(0);
       if (this.isGrounded) {
         if (this.direction === "left") {
           this.flipX = true;
-          this.anims.play("idleRight", true);
+          this.anims.play("idle", true);
         } else {
           this.flipX = false;
-          this.anims.play("idleRight", true);
+          this.anims.play("idle", true);
         }
       }
     }
@@ -210,10 +210,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.anims.stop(this.anims.currentAnim.key);
       if (this.direction === "left") {
         this.flipX = true;
-        this.anims.play("jumpRight", true);
+        this.anims.play("jump", true);
       } else {
         this.flipX = false;
-        this.anims.play("jumpRight", true);
+        this.anims.play("jump", true);
       }
       this.setVelocityY(-this.speed * 2); // Adjust jump velocity as needed
       this.isGrounded = false;
